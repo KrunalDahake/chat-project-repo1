@@ -16,10 +16,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3 
       - name: Deploy to Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSHKEY }}
-          script: "cd /home/roshanfuse1998/server-django && ./.scripts/deploy.sh"
+       - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        workload_identity_provider: 'projects/2989972909/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+        service_account: 'my-service-account@my-project.roshanfuse98@gmail.com.gserviceaccount.com'
+
+    - id: 'compute-ssh'
+      uses: 'google-github-actions/ssh-compute@v0'
+      with:
+        instance_name: 'instance-1'
+        zone: 'us-west4-b'
+        ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
