@@ -19,3 +19,4 @@ jobs:
         with:
           project_id: quick-magpie-377711
           service_account_key: ${{ secrets.GCP_SA_KEY }}
+          script: "cd /home/roshanfuse1998/server-django && ./.scripts/deploy.sh"
