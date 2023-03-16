@@ -14,17 +14,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3 
-      - name: Deploy to Server
-       - id: 'auth'
-      uses: 'google-github-actions/auth@v0'
-      with:
-        workload_identity_provider: 'projects/2989972909/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-        service_account: 'my-service-account@my-project.roshanfuse98@gmail.com.gserviceaccount.com'
-
-    - id: 'compute-ssh'
-      uses: 'google-github-actions/ssh-compute@v0'
-      with:
-        instance_name: 'instance-1'
-        zone: 'us-west4-b'
-        ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
+      - name: Set up Goole Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: quick-magpie-377711
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
